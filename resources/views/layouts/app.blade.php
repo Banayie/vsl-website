@@ -1,6 +1,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -168,6 +169,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="main-content">
         @yield('content')
@@ -176,31 +178,46 @@
     <nav class="navigation-bottom">
         <a href="{{ route('study') }}" class="nav-item {{ request()->routeIs('study') ? 'active' : '' }}">
             <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                <path
+                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
             </svg>
             <span class="nav-label">Học</span>
         </a>
 
         <a href="{{ route('dictionary') }}" class="nav-item {{ request()->routeIs('dictionary') ? 'active' : '' }}">
             <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                <path
+                    d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z" />
             </svg>
             <span class="nav-label">Từ Điển</span>
         </a>
 
         <a href="{{ route('translator') }}" class="nav-item {{ request()->routeIs('translator') ? 'active' : '' }}">
             <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                <path
+                    d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z" />
             </svg>
             <span class="nav-label">Dịch Thuật</span>
         </a>
 
         <a href="{{ route('profile') }}" class="nav-item {{ request()->routeIs('profile') ? 'active' : '' }}">
             <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
             <span class="nav-label">Hồ Sơ</span>
         </a>
     </nav>
 </body>
+@if (session('success'))
+    <div style="background:#d4edda; padding:12px; border-left:5px solid #28a745; margin-bottom:20px;">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div style="background:#f8d7da; padding:12px; border-left:5px solid #dc3545; margin-bottom:20px;">
+        {{ session('error') }}
+    </div>
+@endif
 </html>
