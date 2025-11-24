@@ -211,18 +211,18 @@
             <div class="section-title">Thống kê học tập</div>
             <div class="stats-grid">
                 <div class="stat-box">
-                    <span class="stat-label">📚 Bài học đã hoàn thành</span>
-                    <div class="stat-value">0</div>
+                    <span class="stat-label">Bài học đã hoàn thành</span>
+                    <div class="stat-value">{{ $completedTopics }}</div>
                 </div>
 
                 <div class="stat-box">
-                    <span class="stat-label">📖 Từ vựng đã học</span>
-                    <div class="stat-value">0</div>
+                    <span class="stat-label">Từ vựng đã học</span>
+                    <div class="stat-value">{{ $learnedVocabulary }}</div>
                 </div>
 
                 <div class="stat-box">
-                    <span class="stat-label">🔥 Ngày học liên tiếp</span>
-                    <div class="stat-value">0</div>
+                    <span class="stat-label">Ngày học liên tiếp</span>
+                    <div class="stat-value">{{ $streak }}</div>
                 </div>
             </div>
         </div>

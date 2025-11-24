@@ -60,10 +60,9 @@
         position: relative;
         overflow: hidden;
         border: 2px solid transparent;
-        min-height: 220px;
+        min-height: 230px;
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: space-between;
     }
 
@@ -92,17 +91,49 @@
 
     .topic-icon {
         font-size: 56px;
-        margin-bottom: 16px;
+        margin: 0 auto 12px;
         display: block;
+        text-align: center;
     }
 
     .topic-title {
         font-size: 16px;
         font-weight: 600;
         color: #2D3748;
-        margin: 0 0 20px 0;
-        line-height: 1.4;
+        margin: 0;
         text-align: center;
+        line-height: 1.4;
+    }
+
+    /* New progress badge */
+    .progress-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: #E0F7EC;
+        color: #16A34A;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 12px;
+        border: 1.5px solid #A7F3D0;
+    }
+
+    /* New progress bar */
+    .progress-bar-container {
+        width: 100%;
+        height: 8px;
+        border-radius: 6px;
+        background: #FFE0E0;
+        margin-top: 12px;
+        overflow: hidden;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #FF7E7E, #FF4E4E);
+        border-radius: 6px;
+        transition: width 0.4s ease;
     }
 
     .start-button {
@@ -119,42 +150,11 @@
         box-shadow: 0 4px 12px rgba(229, 115, 115, 0.3);
         position: relative;
         overflow: hidden;
-    }
-
-    .start-button::before {
-        content: '▶';
-        position: absolute;
-        left: 24px;
-        opacity: 0;
-        transition: all 0.3s ease;
+        margin-top: 12px;
     }
 
     .start-button:hover {
         transform: scale(1.02);
-        box-shadow: 0 6px 20px rgba(229, 115, 115, 0.4);
-        padding-left: 36px;
-    }
-
-    .start-button:hover::before {
-        opacity: 1;
-        left: 18px;
-    }
-
-    .start-button:active {
-        transform: scale(0.98);
-    }
-
-    .progress-badge {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: #FFF4E6;
-        color: #F59E0B;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 12px;
-        border: 1.5px solid #FDE68A;
     }
 
     @media (max-width: 1024px) {
@@ -172,15 +172,6 @@
 
         .topic-card {
             padding: 24px 16px;
-            min-height: 200px;
-        }
-
-        .topic-icon {
-            font-size: 48px;
-        }
-
-        .page-title {
-            font-size: 24px;
         }
     }
 
@@ -188,10 +179,6 @@
         .topics-grid {
             grid-template-columns: 1fr;
             gap: 12px;
-        }
-
-        .topic-card {
-            padding: 28px 20px;
         }
     }
 </style>
@@ -210,12 +197,21 @@
 
         @foreach ($topics as $index => $topic)
             <div class="topic-card">
-                @if(rand(0, 2) == 0)
-                    <span class="progress-badge">Mới</span>
-                @endif
-                
+
+                <!-- NEW: badge hiển thị % -->
+                <span class="progress-badge">
+                    {{ $topic->progressPercent ?? 0 }}%
+                </span>
+
                 <span class="topic-icon">{{ $icons[$index % count($icons)] }}</span>
+
                 <h3 class="topic-title">{{ $topic->title }}</h3>
+
+                <!-- NEW: Thanh progress bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill"
+                        style="width: {{ $topic->progressPercent }}%;"></div>
+                </div>
 
                 <a href="{{ route('study.topic', $topic->id) }}" style="text-decoration: none;">
                     <button class="start-button">Bắt đầu học</button>

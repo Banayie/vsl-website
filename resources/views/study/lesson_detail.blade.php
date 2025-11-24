@@ -228,7 +228,7 @@
                 <div class="video-box">
                     <div class="video-container">
                         <video id="lessonVideo" autoplay loop muted playsinline>
-                            <source src="{{ asset('storage/' . $lesson->video_url) }}" type="video/mp4">
+                            <source src="{{ asset('storage/videos/' . $lesson->video_url) }}" type="video/mp4">
                         </video>
                     </div>
                     <div class="video-label reference">{{ $lesson->title }}</div>
@@ -314,16 +314,41 @@
                     webcamLabel.style.background = '#D1FAE5';
                     webcamLabel.style.color = '#059669';
 
-                    setTimeout(() => {
+                    //setTimeout(() => {
                         // Lấy ID bài học từ URL
-                        const currentUrl = window.location.pathname;
-                        const currentLessonId = parseInt(currentUrl.split('/').pop());
+                        //const currentUrl = window.location.pathname;
+                        //const currentLessonId = parseInt(currentUrl.split('/').pop());
 
                         // Chuyển sang bài tiếp theo
-                        const nextLessonId = currentLessonId + 1;
+                        //const nextLessonId = currentLessonId + 1;
 
-                        window.location.href = `/study/lesson/${nextLessonId}`;
-                    }, 1200);
+                        //window.location.href = `/study/lesson/${nextLessonId}`;
+                    //}, 1200);
+
+                    // === Gửi request lưu tiến trình ===
+                    fetch("{{ route('study.lesson.complete', $lesson->id) }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(res => res.json())
+                        .then(() => {
+                            // === Sau khi lưu thành công, chuyển bài tiếp theo ===
+                            setTimeout(() => {
+                                const currentUrl = window.location.pathname;
+                                const currentLessonId = parseInt(currentUrl.split('/').pop());
+                                const nextLessonId = currentLessonId + 1;
+
+                                window.location.href = `/study/lesson/${nextLessonId}`;
+                            }, 1200);
+                        })
+                        .catch(err => {
+                            console.error("Lỗi lưu tiến trình:", err);
+                            alert("❌ Không thể lưu tiến trình!");
+                        });
 
                 } else {
                     webcamLabel.textContent = '✗ Chưa chính xác, thử lại';

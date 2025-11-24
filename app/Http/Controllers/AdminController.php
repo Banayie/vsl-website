@@ -97,7 +97,7 @@ class AdminController extends Controller
     }
     public function lessons()
     {
-        $lessons = Lesson::with('topic')->orderBy('id', 'asc')->get();
+        $lessons = Lesson::with('topic')->orderBy('topic_id', 'asc')->get();
         return view('admin.lessons.index', compact('lessons'));
     }
 
@@ -109,6 +109,27 @@ class AdminController extends Controller
     }
 
     // --- STORE ---
+    // public function storeLesson(Request $request)
+    // {
+    //     $request->validate([
+    //         'topic_id' => 'required|exists:topics,id',
+    //         'title' => 'required|string|max:255',
+    //         'content' => 'required|string',
+    //         'video' => 'nullable|mimes:mp4,mov,avi,wmv,mkv|max:51200'
+    //     ]);
+
+    //     $data = $request->only(['topic_id', 'title', 'content']);
+
+    //     if ($request->hasFile('video')) {
+    //         $filename = time() . '_' . $request->video->getClientOriginalName();
+    //         $path = $request->video->storeAs('videos', $filename, 'public');
+    //         $data['video_url'] = $path;
+    //     }
+
+    //     Lesson::create($data);
+
+    //     return redirect()->route('admin.lessons')->with('success', 'Tạo bài học thành công!');
+    // }
     public function storeLesson(Request $request)
     {
         $request->validate([
@@ -121,8 +142,14 @@ class AdminController extends Controller
         $data = $request->only(['topic_id', 'title', 'content']);
 
         if ($request->hasFile('video')) {
-            $filename = time() . '_' . $request->video->getClientOriginalName();
-            $request->video->storeAs('public/videos', $filename);
+
+            // Tạo tên file
+            $filename = $request->video->getClientOriginalName();
+
+            // Lưu trực tiếp vào public/videos
+            $request->video->storeAs('videos', $filename, 'public');
+
+            // Chỉ lưu tên file vào DB
             $data['video_url'] = $filename;
         }
 
@@ -130,6 +157,7 @@ class AdminController extends Controller
 
         return redirect()->route('admin.lessons')->with('success', 'Tạo bài học thành công!');
     }
+
 
     // --- EDIT FORM ---
     public function editLesson($id)
@@ -161,7 +189,7 @@ class AdminController extends Controller
             }
 
             $filename = time() . '_' . $request->video->getClientOriginalName();
-            $request->video->storeAs('public/videos', $filename);
+            $request->video->storeAs('videos', $filename, 'public');
             $lesson->video_url = $filename;
         }
 

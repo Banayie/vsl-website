@@ -26,6 +26,11 @@ class Lesson extends Model
 
     public function topic()
     {
-        return $this->belongsTo(Topic::class, 'topic_id');
+        return $this->belongsTo(Topic::class, 'topic_id', 'id');
     }
+    public function progress()
+    {
+        return $this->hasMany(UserProgress::class, 'lesson_id', 'id');
+    }
+
 }

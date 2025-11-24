@@ -52,7 +52,7 @@ class LessonSeeder extends Seeder
                     'topic_id' => $topic1->id,
                     'title' => "Chữ cái $letter",
                     'content' => "Hướng dẫn ký hiệu tay của chữ cái $letter.",
-                    'video_url' => "videos/$file",
+                    'video_url' => "$file",
                 ]);
             }
         }
