@@ -19,7 +19,7 @@ class Topic extends Model
     // Quan hệ 1 Chủ đề -> Nhiều bài học
     public function lessons()
     {
-        return $this->hasMany(Lesson::class, 'topic_id');
+        return $this->hasMany(Lesson::class, 'topic_id', 'id');
     }
 
 }

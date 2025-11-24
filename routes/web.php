@@ -62,11 +62,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/study', [StudyController::class, 'topics'])->name('study');
 
+
     Route::get('/study/topic/{topic}', [StudyController::class, 'topicDetail'])
         ->name('study.topic');
 
     Route::get('/study/lesson/{lesson}', [StudyController::class, 'lessonDetail'])
         ->name('study.lesson');
+
+    Route::post(
+        '/study/lesson/{lesson}/complete',
+        [StudyController::class, 'completeLesson']
+    )->name('study.lesson.complete');
 
 
     Route::get('/dictionary', [MainController::class, 'dictionary'])->name('dictionary');
@@ -83,7 +89,8 @@ Route::middleware('auth')->group(function () {
 
 
     // API route (có muốn bảo vệ hay không tùy bạn)
-    Route::post('/translate-sign-language', 
+    Route::post(
+        '/translate-sign-language',
         [SignLanguageController::class, 'translateSignLanguage']
     )->name('api.translate');
 
